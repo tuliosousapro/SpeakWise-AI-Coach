@@ -1,6 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { AIAnalysisReport } from "../types";
 import { ANALYSIS_MODEL, TTS_MODEL } from "../constants";
+import { decodePCM16 } from "../utils/audioUtils";
 
 // Helper to get client instance
 const getAiClient = () => {
@@ -90,14 +91,7 @@ export const synthesizeSpeech = async (text: string): Promise<AudioBuffer | null
     if (!AudioContextClass) return null;
 
     const audioContext = new AudioContextClass();
-    const binaryString = atob(base64Audio);
-    const len = binaryString.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    
-    return await audioContext.decodeAudioData(bytes.buffer);
+    return decodePCM16(base64Audio, audioContext);
   } catch (error) {
     console.error("TTS failed:", error);
     return null;
