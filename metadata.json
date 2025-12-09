@@ -1,0 +1,8 @@
+{
+  "name": "SpeakWise AI Coach",
+  "description": "An AI-powered public speaking coach that provides real-time analysis, gamified progression, and deep feedback using Gemini models.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
